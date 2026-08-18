@@ -1,0 +1,9 @@
+.venv/
+.python/
+.setup/
+.pdf-tools/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.matplotlib/
