@@ -378,19 +378,6 @@ mean_cv_roc_auc
 * [x] Initial commits are pushed.
 * [x] Draft pull request is opened.
 
-Suggested commits:
-
-```bash
-git add .
-git commit -m "feat: add Sprint 1 dataset audit and validation"
-
-git add .
-git commit -m "feat: add leakage-safe logistic regression baseline"
-
-git push -u origin feature/sprint-1-baseline
-```
-
-Open a **Draft Pull Request** at the end of Day 1.
 
 ---
 
