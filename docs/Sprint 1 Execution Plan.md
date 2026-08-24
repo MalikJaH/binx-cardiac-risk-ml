@@ -189,7 +189,7 @@ Start with:
 ```python
 import pandas as pd
 
-df = pd.read_csv("data/raw/synthetic_cardiac_100k.csv")
+df = pd.read_csv("../data/new/synthetic_cardiac_100k.csv")
 
 df.shape
 df.head()
@@ -282,26 +282,8 @@ Charts should have:
 * readable legends
 * short Markdown interpretation
 
----
 
-## 7.6 Create the Development/Test Split
 
-After deterministic validation and duplicate removal:
-
-```python
-from sklearn.model_selection import train_test_split
-
-X = df.drop(columns=["patient_id", "cardiac_risk"])
-y = df["cardiac_risk"]
-
-X_dev, X_test, y_dev, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.20,
-    stratify=y,
-    random_state=42
-)
-```
 
 After this point:
 
@@ -381,34 +363,21 @@ mean_cv_roc_auc
 
 ## Day 1 Definition of Done
 
-* [ ] Sprint branch exists.
-* [ ] Dataset is loaded successfully.
-* [ ] Dataset quality audit is documented.
-* [ ] Duplicate count is recorded.
-* [ ] Missing values are recorded.
-* [ ] Invalid values are identified.
-* [ ] Target balance is recorded.
-* [ ] Development/test split exists.
-* [ ] Test set has not been used for model selection.
-* [ ] Logistic Regression pipeline runs.
-* [ ] 5-fold CV metrics are recorded.
-* [ ] Baseline ROC-AUC benchmark is written in Markdown.
-* [ ] Initial commits are pushed.
-* [ ] Draft pull request is opened.
+* [x] Sprint branch exists.
+* [x] Dataset is loaded successfully.
+* [x] Dataset quality audit is documented.
+* [x] Duplicate count is recorded.
+* [x] Missing values are recorded.
+* [x] Invalid values are identified.
+* [x] Target balance is recorded.
+* [x] train/test split exists.
+* [x] Test set has not been used for model selection.
+* [x] Logistic Regression pipeline runs.
+* [x] 5-fold CV metrics are recorded.
+* [x] Baseline ROC-AUC benchmark is written in Markdown.
+* [x] Initial commits are pushed.
+* [x] Draft pull request is opened.
 
-Suggested commits:
-
-```bash
-git add .
-git commit -m "feat: add Sprint 1 dataset audit and validation"
-
-git add .
-git commit -m "feat: add leakage-safe logistic regression baseline"
-
-git push -u origin feature/sprint-1-baseline
-```
-
-Open a **Draft Pull Request** at the end of Day 1.
 
 ---
 
