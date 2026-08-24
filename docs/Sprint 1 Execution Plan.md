@@ -1,123 +1,146 @@
-#  Sprint 1 Execution Plan
+# Sprint 1 Execution Plan
 
 **Project:** Cardiac Patient Monitoring — Synthetic Cardiac-Risk Classification
 **Phase:** Phase 3 Capstone
 **Sprint:** Sprint 1 of 4
 **Week:** Week 6
 **Duration:** 5 working days — 40 hours
-**Workflow:** Jupyter Notebook + Python + scikit-learn + TensorFlow/Keras + GitHub
-**Primary Sprint Outcome:** A validated dataset, documented EDA, reproducible Logistic Regression baseline, and a benchmark that later models must beat.
-**Status:** Ready for execution
+**Stack:** Python, NumPy, Pandas, scikit-learn, Matplotlib, TensorFlow/Keras, Jupyter, GitHub
 
 ---
 
-# 1. Sprint 1 Goal
+# 1. Sprint Goal
 
-> **Understand and validate the synthetic cardiac dataset, establish a leakage-safe Logistic Regression baseline, and use that baseline as the benchmark for all later capstone models.**
+Establish a reproducible classical machine-learning baseline, understand the mechanics of neural-network training, and build the first TensorFlow/Keras neural network for the cardiac-risk classification project.
 
-Sprint 1 will also introduce a first TensorFlow/Keras neural network as part of the Week 6 deep-learning learning objectives.
+By the end of Sprint 1, the project should contain:
 
-The neural network is **not required to beat the baseline during Sprint 1**. Its purpose this week is to demonstrate the complete deep-learning workflow and establish the first comparison point.
+* a validated project dataset;
+* brief documented EDA;
+* a leakage-safe Logistic Regression baseline;
+* a recorded ROC-AUC benchmark;
+* activation-function and forward-pass experiments;
+* training-mechanics experiments;
+* a first TensorFlow/Keras neural network;
+* training and validation curves;
+* controlled tuning experiments;
+* comparison against the baseline;
+* mentor review evidence;
+* Sprint Review and Retrospective.
+
+The purpose of Sprint 1 is to establish the complete workflow.
+
+The neural network should be compared fairly with the baseline. Beating the baseline is desirable, but a lower score is still a valid result if the methodology and analysis are correct.
 
 ---
 
-# 2. Dataset Locked for Sprint 1
+# 2. Dataset
 
-Sprint 1 will use the generated synthetic cardiac dataset:
+Sprint 1 uses:
 
 ```text
 synthetic_cardiac_100k.csv
 ```
 
-Dataset characteristics:
+Target:
 
-* 100,000 rows
-* 16 columns
-* Binary target: `cardiac_risk`
-* Approximately 30% positive class
-* Synthetic records only
-* Intentional missing values
-* Intentional exact duplicate rows
-* Intentional invalid/outlier values for validation practice
-* No real patient or clinical data
-
-## Target
+```text
 cardiac_risk
 ```
 
-Where:
+Target meaning:
 
 ```text
 0 = lower simulated cardiac-risk pattern
 1 = elevated simulated cardiac-risk pattern
 ```
 
+Important dataset properties:
+
+* approximately 100,000 rows;
+* synthetic data only;
+* binary classification target;
+* intentional missing values;
+* exact duplicate rows;
+* intentionally invalid/outlier values;
+* no real clinical or patient data.
+
+The project must clearly state that patterns discovered in this dataset are properties of the synthetic data-generation process and must not be interpreted as clinical evidence.
+
 ---
 
+# 3. Evaluation Strategy
 
----
-
-# 3. Primary Evaluation Metric
-
-## Model-selection metric
+## Primary metric
 
 ```text
 ROC-AUC
 ```
 
-The official benchmark will be:
+The official baseline benchmark is:
 
 ```text
-Mean 5-Fold CV ROC-AUC ± Standard Deviation
+Mean 5-Fold Stratified CV ROC-AUC ± Standard Deviation
 ```
 
-Additional metrics:
+Supporting metrics:
 
-```text
-Accuracy
-Precision
-Recall
-F1-score
-```
+* Accuracy
+* Precision
+* Recall
+* F1-score
 
-ROC-AUC is the metric that future models must primarily beat.
+The baseline benchmark should come from actual notebook execution and must never be written in advance.
 
-For example, if Sprint 1 produces:
+Example:
 
 ```text
 Logistic Regression
-Mean CV ROC-AUC = 0.81
+Mean CV ROC-AUC = X.XXX ± X.XXX
 ```
 
-then the benchmark statement becomes:
+Future models will be compared primarily against this benchmark.
 
-> Future candidate models should aim to outperform a cross-validated ROC-AUC of 0.81.
+---
 
-The actual number must come from the executed notebook. It must not be written in advance.
+# 4. Data-Splitting Rule
+
+Create a stratified development/test split.
+
+The final test set must not influence:
+
+* architecture selection;
+* learning-rate selection;
+* dropout selection;
+* batch-size selection;
+* epoch selection;
+* hyperparameter tuning.
+
+Use training/validation data for model development.
+
+Prefer one final test evaluation after model decisions are complete.
+
+If the internship exercise specifically requires an earlier test evaluation, record it once and do not use the result to select or tune later configurations.
 
 ---
 
 # 5. Repository Structure
 
-By the end of Sprint 1, the repository should contain:
-
 ```text
 cardiac-risk-capstone/
 │
 ├── data/
-│   ├── raw/
+│   ├── new/
 │   │   └── synthetic_cardiac_100k.csv
-│   │
+│   ├── images/
 │   └── data_dictionary.md
 │
 ├── notebooks/
 │   ├── 01_data_audit_eda.ipynb
 │   ├── 02_logistic_regression_baseline.ipynb
-│   └── 03_neural_network_intro.ipynb
-│
-├── src/
-│   ├── __init__.py
-│   └── validation.py
+│   ├── 03_activations_forward_pass.ipynb
+│   ├── 04_training_mechanics.ipynb
+│   └── 05_keras_neural_network.ipynb
 │
 ├── reports/
 │   ├── baseline_cv_metrics.csv
@@ -126,216 +149,122 @@ cardiac-risk-capstone/
 │
 ├── models/
 │
+├── src/
+│   └── validation.py
+│
 ├── README.md
 ├── requirements.txt
 └── .gitignore
 ```
 
-No final neural-network model needs to be saved during Sprint 1 unless it becomes useful later.
+Not every folder must contain substantial code during Sprint 1. The priority is a clear and reproducible notebook workflow.
 
 ---
 
-# 6. Sprint 1 Backlog
+# 6. Sprint Backlog
 
-| ID    | Backlog Item                                                              | Priority                 |
-| ----- | ------------------------------------------------------------------------- | ------------------------ |
-| S1-01 | Sprint kickoff, repository setup, branch creation, and scope confirmation | Must                     |
-| S1-02 | Dataset audit and validation rules                                        | Must                     |
-| S1-03 | Exploratory data analysis                                                 | Must                     |
-| S1-04 | Development/test split and preprocessing pipeline                         | Must                     |
-| S1-05 | Logistic Regression baseline with stratified 5-fold CV                    | Must                     |
-| S1-06 | Record baseline benchmark and supporting metrics                          | Must                     |
-| S1-07 | Build first TensorFlow/Keras neural network                               | Must for Week 6 learning |
-| S1-08 | Mentor notebook/code review and corrections                               | Must                     |
-| S1-09 | Sprint Review, documentation, and retrospective                           | Must                     |
+| ID    | Task                                        | Priority |
+| ----- | ------------------------------------------- | -------- |
+| S1-01 | Sprint planning and repository setup        | Must     |
+| S1-02 | Dataset validation and brief EDA            | Must     |
+| S1-03 | Logistic Regression baseline                | Must     |
+| S1-04 | Record official baseline benchmark          | Must     |
+| S1-05 | Activation-function experiments             | Must     |
+| S1-06 | Manual/NumPy forward propagation            | Must     |
+| S1-07 | Training-loop and learning-rate experiments | Must     |
+| S1-08 | Mentor review                               | Must     |
+| S1-09 | First TensorFlow/Keras network              | Must     |
+| S1-10 | Dropout / Batch Normalization experiment    | Must     |
+| S1-11 | Controlled tuning and EarlyStopping         | Must     |
+| S1-12 | Baseline vs neural-network comparison       | Must     |
+| S1-13 | Sprint Review and Retrospective             | Must     |
 
 ---
 
-# 7. Day 1 — Sprint Kickoff, Dataset Audit & Baseline First
+# 7. Day 1 — Sprint Planning, Dataset, Baseline & Neural-Network Architecture
 
-**Goal:** Finish the core Sprint 1 requirement as early as possible: understand the dataset and establish the first reproducible baseline.
+**Goal:** Establish the project foundation and create the benchmark that every later model will be compared against.
 
 ## 7.1 Sprint Planning
 
 Confirm:
 
-* Sprint goal
-* dataset
-* target
-* primary metric
-* modelling restrictions
-* Sprint Definition of Done
+* dataset;
+* target;
+* problem type;
+* primary metric;
+* Sprint goal;
+* modelling restrictions;
+* Definition of Done.
 
-Create the branch:
+Use the existing Sprint feature branch:
 
 ```bash
-git checkout main
-git pull
-git checkout -b feature/sprint-1-baseline
+feature/sprint-1-baseline
 ```
+
+If the branch already exists, continue using it rather than creating another branch unnecessarily.
 
 ---
 
-## 7.2 Dataset Audit
-
-Create:
-
-```text
-notebooks/01_data_audit_eda.ipynb
-```
-
-Start with:
-
-```python
-import pandas as pd
-
-df = pd.read_csv("../data/new/synthetic_cardiac_100k.csv")
-
-df.shape
-df.head()
-df.info()
-df.describe(include="all").T
-```
+## 7.2 Dataset Validation
 
 Audit:
 
-* row count
-* column count
-* data types
-* duplicate rows
-* missing values
-* invalid numeric values
-* invalid categories
-* target balance
-* unique values
-* identifier quality
+* shape;
+* data types;
+* missing values;
+* duplicates;
+* invalid numeric values;
+* invalid categories;
+* target balance;
+* identifiers.
 
-### Validation rules
+Remove exact duplicates before modelling.
 
-Use the following expected clean ranges:
+Convert invalid measurements to missing values according to documented validation rules.
 
-```text
-age:             18–90
-resting_bp:      85–210
-cholesterol:     100–430
-bmi:             16–48
-max_heart_rate:  65–205
-```
-
-Binary columns must contain only:
-
-```text
-0
-1
-```
-
-Allowed categorical values must be checked against the data dictionary.
+Learned imputation must occur inside the preprocessing pipeline.
 
 ---
 
-## 7.3 Duplicate Handling
+## 7.3 Brief EDA
 
-Count exact duplicates:
+The purpose of Day 1 EDA is to understand the dataset sufficiently for modelling, not to spend the whole sprint producing visualizations.
 
-```python
-df.duplicated().sum()
-```
+Include:
 
-Document the result.
+* target distribution;
+* important numeric distributions;
+* categorical distributions;
+* missing-value summary;
+* several useful feature/target relationships;
+* numeric correlation overview.
 
-Remove exact duplicates before the modelling split.
+Document at least three meaningful observations.
 
-Do not silently remove them without recording how many were found.
-
----
-
-## 7.4 Invalid Values
-
-Invalid values should be identified using the documented rules.
-
-Instead of inventing replacements, convert invalid numeric measurements to missing values:
-
-```python
-df.loc[invalid_condition, column] = pd.NA
-```
-
-Their eventual imputation will occur inside the modelling pipeline.
-
-This keeps validation logic separate from learned preprocessing.
+State the synthetic-data limitation.
 
 ---
 
-## 7.5 Begin EDA
+## 7.4 Baseline Model
 
-At minimum:
-
-* target class distribution
-* numeric distributions
-* missing-value summary
-* categorical distributions
-* cardiac-risk rate by important predictors
-
-Charts should have:
-
-* titles
-* labelled axes
-* readable legends
-* short Markdown interpretation
-
-
-
-
-After this point:
-
-> **Do not inspect test performance during Sprint 1.**
-
----
-
-## 7.7 Build the First Baseline
-
-Create:
+Build:
 
 ```text
-notebooks/02_logistic_regression_baseline.ipynb
+Numeric features
+→ MedianImputer
+→ StandardScaler
+
+Categorical features
+→ MostFrequentImputer
+→ OneHotEncoder
+
+→ ColumnTransformer
+→ LogisticRegression
 ```
 
-Build a preprocessing pipeline.
-
-### Numeric pipeline
-
-```text
-Median imputation
-→
-StandardScaler
-```
-
-### Categorical pipeline
-
-```text
-Most-frequent imputation
-→
-OneHotEncoder(handle_unknown="ignore")
-```
-
-Then:
-
-```text
-ColumnTransformer
-→
-LogisticRegression
-```
-
-Use a transparent baseline without hyperparameter tuning.
-
-Example:
-
-```python
-LogisticRegression(
-    max_iter=2000
-)
-```
-
-Evaluate it using:
+Use:
 
 ```python
 StratifiedKFold(
@@ -347,194 +276,351 @@ StratifiedKFold(
 
 Record:
 
-* ROC-AUC
-* accuracy
-* precision
-* recall
-* F1
+* ROC-AUC mean;
+* ROC-AUC standard deviation;
+* accuracy;
+* precision;
+* recall;
+* F1.
 
-The most important result is:
-
-```text
-mean_cv_roc_auc
-```
+Write the official baseline benchmark in Markdown.
 
 ---
 
-## Day 1 Definition of Done
+## 7.5 Neural-Network Architecture Foundations
 
-* [x] Sprint branch exists.
-* [x] Dataset is loaded successfully.
-* [x] Dataset quality audit is documented.
-* [x] Duplicate count is recorded.
-* [x] Missing values are recorded.
-* [x] Invalid values are identified.
-* [x] Target balance is recorded.
-* [x] train/test split exists.
-* [x] Test set has not been used for model selection.
-* [x] Logistic Regression pipeline runs.
-* [x] 5-fold CV metrics are recorded.
-* [x] Baseline ROC-AUC benchmark is written in Markdown.
-* [x] Initial commits are pushed.
-* [x] Draft pull request is opened.
-
-
----
-
-# 8. Day 2 — Complete EDA & Deep-Learning Foundations
-
-**Goal:** Complete the analytical understanding of the dataset while learning the concepts needed for the neural network.
-
-## EDA work
-
-Complete:
-
-### Univariate analysis
-
-Numeric distributions:
-
-```text
-age
-resting_bp
-cholesterol
-bmi
-max_heart_rate
-```
-
-Categorical distributions:
-
-```text
-sex
-chest_pain_type
-resting_ecg
-smoking
-diabetes
-exercise_angina
-```
-
-### Target analysis
-
-Plot:
-
-```text
-cardiac_risk = 0
-cardiac_risk = 1
-```
-
-Report percentages.
-
-### Relationship analysis
-
-Examples:
-
-```text
-Age vs cardiac_risk
-BMI vs cardiac_risk
-Resting BP vs cardiac_risk
-Cholesterol vs cardiac_risk
-Diabetes vs cardiac_risk
-Smoking vs cardiac_risk
-Exercise angina vs cardiac_risk
-Chest pain type vs cardiac_risk
-```
-
-### Correlation analysis
-
-Calculate numeric correlation.
-
-Do not interpret correlation as causation.
-
----
-
-## Required EDA Findings
-
-Write at least three meaningful findings in Markdown.
-
-Example structure:
-
-```text
-Finding 1:
-...
-
-Finding 2:
-...
-
-Finding 3:
-...
-```
-
-Also document:
-
-> Because the dataset is synthetically generated, observed relationships reflect the assumptions and probability structure used during generation and must not be interpreted as clinical evidence.
-
----
-
-## Deep-Learning Learning Objectives
-
-Study and document:
+Understand:
 
 ```text
 Neuron
 Weights
 Bias
-Layers
-Activation functions
-Forward propagation
+Input layer
+Hidden layer
+Output layer
 ```
 
-Understand:
+Core operation:
 
 ```text
-output = activation(XW + b)
+z = XW + b
+output = activation(z)
 ```
 
-No complicated neural network is required yet.
+No TensorFlow model is required on Day 1.
+
+---
+
+## Day 1 Definition of Done
+
+* [x] Sprint plan confirmed.
+* [x] Dataset loaded.
+* [x] Dataset audit documented.
+* [x] Important validation issues handled.
+* [x] Brief EDA completed.
+* [x] Train/test strategy established.
+* [x] Logistic Regression pipeline implemented.
+* [x] Stratified 5-fold CV executed.
+* [x] Baseline metrics recorded.
+* [x] Baseline ROC-AUC benchmark documented.
+* [x] Work pushed to the Sprint branch.
+* [x] Draft PR opened.
+
+---
+
+# 8. Day 2 — Activations, Forward Propagation & Loss
+
+**Goal:** Understand how a neural network transforms an input into a prediction and how the prediction error is measured.
+
+## 8.1 Activation Functions
+
+Study:
+
+```text
+ReLU
+Sigmoid
+Tanh
+Softmax
+```
+
+Understand why non-linear activation functions are necessary.
+
+Practical rule:
+
+```text
+Hidden layers → ReLU
+
+Binary classification → Sigmoid
+Multi-class classification → Softmax
+Regression → Linear output
+```
+
+---
+
+## 8.2 Activation Experiment
+
+Create:
+
+```text
+notebooks/03_activations_forward_pass.ipynb
+```
+
+Plot:
+
+* ReLU;
+* sigmoid;
+* tanh;
+
+over a range such as:
+
+```text
+-5 to 5
+```
+
+Add a short Markdown interpretation explaining how each function transforms its input.
+
+---
+
+## 8.3 Project Output Activation and Loss
+
+The cardiac project is binary classification.
+
+Therefore:
+
+```text
+Output activation = Sigmoid
+Loss = Binary Cross-Entropy
+```
+
+Document why:
+
+* sigmoid returns a value between 0 and 1;
+* the result can represent the predicted probability of `cardiac_risk = 1`;
+* binary cross-entropy is appropriate for a binary target.
+
+---
+
+## 8.4 Forward Propagation Experiment
+
+Create a tiny NumPy network:
+
+```text
+2 inputs
+→ 2 hidden neurons
+→ ReLU
+→ 1 output neuron
+→ Sigmoid
+```
+
+Calculate:
+
+```text
+z1 = XW1 + b1
+a1 = ReLU(z1)
+
+z2 = a1W2 + b2
+prediction = sigmoid(z2)
+```
+
+Record the intermediate values and final prediction.
 
 ---
 
 ## Day 2 Definition of Done
 
-* [ ] EDA notebook is complete.
-* [ ] At least three findings are documented.
-* [ ] Class imbalance is discussed.
-* [ ] Important feature relationships are visualized.
-* [ ] Synthetic-data limitation is clearly stated.
-* [ ] Correlation analysis is included.
-* [ ] Baseline notebook runs from top to bottom.
-* [ ] Work is committed and pushed to the Draft PR.
+* [x] ReLU plotted.
+* [x] Sigmoid plotted.
+* [x] Tanh plotted.
+* [x] Activation observations documented.
+* [x] Sigmoid justified for the project output.
+* [x] Binary cross-entropy justified.
+* [x] Tiny NumPy forward pass completed.
+* [x] Intermediate values documented.
+* [x] Final prediction interpreted.
+* [x] Notebook restarted and Run All succeeds.
+* [x] Changes committed.
+* [x] Changes pushed to Draft PR.
 
-Suggested commit:
 
-```bash
-git commit -am "feat: complete Sprint 1 exploratory data analysis"
-git push
-```
+# 9. Day 3 — Backpropagation, Gradient Descent & Optimizers
 
----
-
-# 9. Day 3 — First Neural Network & Mentor Review
-
-**Goal:** Apply the Week 6 neural-network concepts and prepare a clean project state for mentor review.
+**Goal:** Understand how the network moves from making a prediction to learning from its error.
 
 Create:
 
 ```text
-notebooks/03_neural_network_intro.ipynb
+notebooks/04_training_mechanics.ipynb
 ```
 
-Use the same development data and compatible preprocessing approach.
+---
 
-A reasonable first architecture:
+## 9.1 Training Loop
+
+Document:
+
+```text
+Forward pass
+    ↓
+Prediction
+    ↓
+Loss
+    ↓
+Backpropagation
+    ↓
+Gradients
+    ↓
+Optimizer update
+    ↓
+New weights
+```
+
+Explain in your own words:
+
+* what backpropagation computes;
+* why gradients are needed;
+* how gradient descent updates weights;
+* why the chain rule is involved.
+
+No manual implementation of full backpropagation is required.
+
+---
+
+## 9.2 Learning Rate
+
+Understand:
+
+```text
+Too low
+→ very slow learning
+
+Too high
+→ unstable/diverging loss
+
+Reasonable
+→ steady reduction in loss
+```
+
+Run a small experiment using three learning rates representing:
+
+* too low;
+* reasonable;
+* too high.
+
+Plot the resulting loss curves.
+
+The purpose is to observe behaviour, not to maximize performance.
+
+---
+
+## 9.3 Optimizers
+
+Understand:
+
+### SGD
+
+Basic gradient-based parameter updates.
+
+### Adam
+
+Adaptive learning rates per parameter and a strong general-purpose default.
+
+Also understand:
+
+* epoch;
+* batch;
+* batch size.
+
+---
+
+# Mentor Review — Day 3
+
+The Draft PR should now contain:
+
+* dataset audit;
+* EDA;
+* preprocessing;
+* Logistic Regression baseline;
+* baseline metrics;
+* activation-function notebook;
+* forward-pass experiment;
+* training-mechanics notebook.
+
+Update the PR description with:
+
+```markdown
+## Sprint Goal
+
+## Completed
+
+## Dataset Findings
+
+## Baseline Result
+
+## Deep-Learning Concepts Completed
+
+## Current Experiments
+
+## Questions / Blockers
+```
+
+After mentor feedback:
+
+* read every comment;
+* address methodological issues;
+* rerun affected notebook sections;
+* reply to important review comments;
+* push fixes.
+
+---
+
+## Day 3 Definition of Done
+
+* [ ] Four-step training loop documented.
+* [ ] Backpropagation explained conceptually.
+* [ ] Gradient descent understood.
+* [ ] Learning rate explained.
+* [ ] Three learning-rate behaviours tested.
+* [ ] Loss curves plotted.
+* [ ] Adam vs SGD understood.
+* [ ] Epoch and batch terminology understood.
+* [ ] Draft PR ready for mentor review.
+* [ ] Mentor feedback addressed where available.
+
+---
+
+# 10. Day 4 — Build & Train the First TensorFlow/Keras Network
+
+**Goal:** Apply Days 1–3 by building and training an actual neural network.
+
+Create:
+
+```text
+notebooks/05_keras_neural_network.ipynb
+```
+
+Use the same project data and compatible preprocessing strategy as the baseline.
+
+---
+
+## 10.1 First Architecture
+
+Start simple:
 
 ```python
 model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu"),
     keras.layers.Dense(32, activation="relu"),
-    keras.layers.Dense(16, activation="relu"),
     keras.layers.Dense(1, activation="sigmoid")
 ])
 ```
 
-Compile with:
+The exact hidden-layer width is an initial experiment, not a final architecture.
+
+---
+
+## 10.2 Compile
+
+Use:
 
 ```python
 model.compile(
@@ -547,11 +633,132 @@ model.compile(
 )
 ```
 
-Use a validation subset from the development data.
+This connects directly to the Day 2 decisions:
 
-Do not use the final test set.
+```text
+Binary task
+→ Sigmoid output
+→ Binary Cross-Entropy
+```
 
-Add:
+---
+
+## 10.3 Train
+
+Train using training data with a separate validation set.
+
+Start with at least:
+
+```text
+30 epochs
+batch_size = 32
+```
+
+Record:
+
+* training loss;
+* validation loss;
+* training ROC-AUC;
+* validation ROC-AUC;
+* accuracy.
+
+Plot:
+
+```text
+Training vs Validation Loss
+Training vs Validation ROC-AUC
+```
+
+Diagnose:
+
+* underfitting;
+* reasonable fit;
+* overfitting.
+
+---
+
+## 10.4 Dropout / Batch Normalization
+
+Run one controlled architecture improvement.
+
+Example:
+
+```python
+model = keras.Sequential([
+    keras.layers.Dense(64, activation="relu"),
+    keras.layers.BatchNormalization(),
+    keras.layers.Dropout(0.3),
+
+    keras.layers.Dense(32, activation="relu"),
+    keras.layers.Dense(1, activation="sigmoid")
+])
+```
+
+Compare the curves against the original model.
+
+Do not make many changes simultaneously.
+
+---
+
+## Day 4 Definition of Done
+
+* [ ] TensorFlow/Keras model builds.
+* [ ] Correct sigmoid output used.
+* [ ] Binary cross-entropy used.
+* [ ] Adam used.
+* [ ] Network trains successfully.
+* [ ] Training loss plotted.
+* [ ] Validation loss plotted.
+* [ ] ROC-AUC curves plotted.
+* [ ] Fit diagnosed in Markdown.
+* [ ] Dropout and/or BatchNormalization tested.
+* [ ] Controlled comparison documented.
+* [ ] No test-set-driven tuning performed.
+
+Suggested commit:
+
+```bash
+git add .
+git commit -m "feat: train first Keras neural network"
+git push
+```
+
+---
+
+# 11. Day 5 — Tuning, Evaluation & Sprint Review
+
+**Goal:** Improve the network systematically, evaluate the final Sprint 1 candidate, and close the sprint with reproducible evidence.
+
+---
+
+## 11.1 Controlled Tuning
+
+Tune one variable at a time.
+
+Priority:
+
+```text
+1. Learning rate
+2. Network width/depth
+3. Dropout
+4. Batch size
+```
+
+Maintain an experiment table:
+
+| Run          | Architecture | Learning Rate | Dropout | Batch Size | Validation ROC-AUC | Notes   |
+| ------------ | ------------ | ------------: | ------: | ---------: | -----------------: | ------- |
+| Baseline NN  | 64 → 32 → 1  |         0.001 |       0 |         32 |                ... | Initial |
+| Experiment 1 | ...          |           ... |     ... |        ... |                ... | ...     |
+| Experiment 2 | ...          |           ... |     ... |        ... |                ... | ...     |
+
+Do not run dozens of arbitrary configurations.
+
+---
+
+## 11.2 EarlyStopping
+
+Use:
 
 ```python
 EarlyStopping(
@@ -561,168 +768,48 @@ EarlyStopping(
 )
 ```
 
+Confirm:
+
+* training stops when validation loss stops improving;
+* best weights are restored.
+
+---
+
+## 11.3 Final Sprint Comparison
+
+Compare:
+
+| Model               | Evaluation                     |       ROC-AUC |
+| ------------------- | ------------------------------ | ------------: |
+| Logistic Regression | Mean 5-fold CV                 | X.XXX ± X.XXX |
+| Neural Network      | Validation / agreed evaluation |         X.XXX |
+
+Do not pretend these numbers are directly equivalent if the validation procedures differ.
+
+Clearly document the methodology used for each score.
+
+---
+
+## 11.4 Final Test Evaluation
+
+Once model decisions are complete, perform one final test evaluation if required for Sprint 1.
+
 Record:
 
-* training loss
-* validation loss
-* training ROC-AUC
-* validation ROC-AUC
-* accuracy
+* ROC-AUC;
+* accuracy;
+* precision;
+* recall;
+* F1;
+* confusion matrix if useful.
 
-Plot:
-
-```text
-Training vs validation loss
-Training vs validation ROC-AUC
-```
+Do not return to tuning based on the final test result.
 
 ---
 
-# Mentor Review — Day 3
+# 12. Reproducibility Check
 
-The Draft PR should contain enough work for meaningful review.
-
-The mentor should be able to inspect:
-
-```text
-Dataset audit
-EDA
-Validation decisions
-Train/test strategy
-Preprocessing
-Logistic Regression baseline
-Baseline metrics
-Initial neural network
-```
-
-Update the PR description with:
-
-```text
-## Sprint Goal
-
-## Completed
-
-## Dataset Findings
-
-## Baseline Result
-
-## Validation Performed
-
-## Current Neural Network Result
-
-## Questions / Blockers
-```
-
-After review:
-
-* read every comment
-* respond to methodology questions
-* fix valid issues
-* rerun affected notebook cells
-* push corrections
-
-Suggested commit:
-
-```bash
-git commit -am "fix: address mentor review feedback"
-git push
-```
-
----
-
-# 10. Day 4 — Deep-Learning Training Loop & Controlled Experiments
-
-**Goal:** Understand why the neural network behaves as it does instead of randomly changing settings.
-
-Study:
-
-```text
-Loss
-Forward propagation
-Backpropagation
-Gradient descent
-Learning rate
-Optimizers
-Epochs
-Batch size
-Batch normalization
-Overfitting
-Early stopping
-```
-
-Run only a small number of controlled experiments.
-
-For example:
-
-### Experiment A
-
-```text
-32 → 16 → 1
-ReLU
-Adam
-```
-
-### Experiment B
-
-```text
-64 → 32 → 1
-ReLU
-Adam
-```
-
-### Experiment C
-
-```text
-64
-BatchNormalization
-32
-BatchNormalization
-1
-```
-
-Change one meaningful architectural idea at a time where possible.
-
-Do not run dozens of configurations simply searching for the highest score.
-
-Create a comparison table:
-
-| Model               |    Validation ROC-AUC | Notes               |
-| ------------------- | --------------------: | ------------------- |
-| Logistic Regression | Official CV benchmark | Baseline            |
-| Neural Network A    |                   ... | Simple network      |
-| Neural Network B    |                   ... | Increased capacity  |
-| Neural Network C    |                   ... | Batch normalization |
-
-The Logistic Regression score remains the official Sprint 1 benchmark.
-
-The neural-network results are exploratory because their validation methodology is not yet the final model-selection procedure.
-
----
-
-## Day 4 Definition of Done
-
-* [ ] Neural network trains successfully.
-* [ ] Loss curve is shown.
-* [ ] Validation metric curve is shown.
-* [ ] Overfitting is checked.
-* [ ] Early stopping is implemented.
-* [ ] At least one controlled comparison is documented.
-* [ ] Results are compared with the Logistic Regression baseline.
-* [ ] No final-test evaluation has occurred.
-
----
-
-# 11. Day 5 — Sprint Review, Documentation & Retrospective
-
-**Goal:** Close Sprint 1 with reproducible evidence rather than unfinished notebook experiments.
-
----
-
-## 11.1 Final Reproducibility Check
-
-Restart each notebook kernel.
-
-Run:
+For every notebook:
 
 ```text
 Kernel
@@ -735,92 +822,65 @@ Required notebooks:
 ```text
 01_data_audit_eda.ipynb
 02_logistic_regression_baseline.ipynb
-03_neural_network_intro.ipynb
+03_activations_forward_pass.ipynb
+04_training_mechanics.ipynb
+05_keras_neural_network.ipynb
 ```
 
-All must execute without manual hidden state.
+All notebooks should execute without relying on hidden notebook state.
 
 ---
 
-## 11.2 Save Baseline Metrics
+# 13. Sprint Review
 
-Create:
+Demo:
 
-```text
-reports/baseline_cv_metrics.csv
-```
+1. project dataset;
+2. dataset-quality issues;
+3. important EDA findings;
+4. preprocessing pipeline;
+5. Logistic Regression baseline;
+6. baseline ROC-AUC;
+7. activation-function experiment;
+8. forward propagation;
+9. training loop;
+10. first Keras neural network;
+11. training/validation curves;
+12. tuning experiments;
+13. baseline vs neural-network comparison;
+14. GitHub PR.
 
-Suggested structure:
-
-```text
-model,metric,cv_mean,cv_std
-logistic_regression,roc_auc,...
-logistic_regression,accuracy,...
-logistic_regression,precision,...
-logistic_regression,recall,...
-logistic_regression,f1,...
-```
-
----
-
-## 11.3 Official Benchmark Statement
-
-Add a Markdown section:
-
-```markdown
-## Sprint 1 Baseline Benchmark
-
-Logistic Regression achieved a mean 5-fold cross-validated
-ROC-AUC of **X.XXX ± X.XXX** on the development set.
-
-This is the official baseline benchmark for the capstone.
-
-Future candidate models should aim to outperform this ROC-AUC
-under a comparable validation procedure.
-
-The final test set remains untouched and will be reserved for
-the capstone's final unbiased evaluation.
-```
-
-Replace `X.XXX` with the actual executed results.
-
----
-
-# 12. Sprint Review
-
-Demo the following to the mentor:
-
-1. Dataset
-2. Data-quality audit
-3. Important EDA findings
-4. Preprocessing pipeline
-5. Logistic Regression baseline
-6. Cross-validation result
-7. Official benchmark
-8. First Keras neural network
-9. Training curves
-10. Comparison with baseline
-11. GitHub PR and project structure
-
-Questions Sprint Review must answer:
+Be prepared to answer:
 
 ```text
-What dataset are we using?
 What is the target?
-What problems were found in the data?
-How were they handled?
-How was leakage prevented?
-What is the baseline?
-What is the benchmark ROC-AUC?
-Did the neural network improve on it?
-What remains for Sprint 2?
-```
 
-Incomplete work must move to Sprint 2 with a documented reason.
+Why is sigmoid used?
+
+Why is binary cross-entropy used?
+
+What happens during forward propagation?
+
+What does backpropagation calculate?
+
+What does the learning rate control?
+
+Why was Adam selected?
+
+What is the baseline?
+
+What ROC-AUC must later models beat?
+
+Did the neural network outperform the baseline?
+
+Was the final test set protected from model selection?
+
+What should improve in Sprint 2?
+```
 
 ---
 
-# 13. Sprint Retrospective
+# 14. Sprint Retrospective
 
 Create:
 
@@ -828,234 +888,151 @@ Create:
 reports/sprint1_retrospective.md
 ```
 
-Answer:
+Document:
 
 ## What went well?
 
-Examples:
-
-```text
-The preprocessing pipeline was reproducible.
-The baseline was established early.
-The dataset audit identified quality problems before modelling.
-```
+Actual successful parts of the sprint.
 
 ## What did not go well?
 
-Record actual issues rather than inventing successes.
+Real problems encountered.
 
 ## What should improve?
 
-Identify one or two concrete improvements.
+One or two concrete improvements.
 
 ## Sprint 2 Action
 
-Choose one specific action.
+Choose one specific behavioural or engineering improvement.
 
 Example:
 
-> Use a consistent experiment-tracking table for every candidate model so model comparisons remain reproducible.
-
----
-
-# 14. Daily Stand-Up Format
-
-At the beginning of each day, record a short update:
-
-```markdown
-### Daily Stand-Up — Day X
-
-**Completed yesterday**
-- ...
-
-**Today**
-- ...
-
-**Blockers**
-- None / ...
-```
-
-The stand-up should take approximately three minutes.
+> Record every experiment's configuration and validation result immediately so model comparisons remain reproducible.
 
 ---
 
 # 15. Git Workflow
 
-Use one Sprint feature branch:
+Continue using:
 
 ```text
 feature/sprint-1-baseline
 ```
 
-Recommended commit history:
+Recommended history:
 
 ```text
-chore: initialize Sprint 1 project structure
-
-feat: add dataset audit and validation rules
-
-feat: complete cardiac dataset EDA
-
+feat: add dataset audit and EDA
 feat: add leakage-safe logistic regression baseline
-
-feat: add introductory Keras neural network
-
+feat: add activation and forward propagation lab
+feat: add neural network training mechanics
 fix: address mentor review feedback
-
-docs: add Sprint 1 results and retrospective
+feat: train first Keras neural network
+feat: add neural network tuning experiments
+docs: complete Sprint 1 review and retrospective
 ```
 
-Push regularly:
+Push regularly.
 
-```bash
-git push
-```
-
-The Draft PR opened on Day 1 remains open through the sprint.
-
-Day 3:
-
-```text
-Mentor Review
-```
-
-Day 5:
-
-```text
-Final review
-→
-Approval
-→
-Merge
-```
+Do not wait until Day 5 to commit all work.
 
 ---
 
-# 16. Sprint 1 Acceptance Criteria
+# 16. Sprint 1 Definition of Done
 
-Sprint 1 is complete only when:
+## Dataset & Baseline
 
-## Dataset
+* [ ] Dataset documented.
+* [ ] Data-quality issues audited.
+* [ ] Brief EDA completed.
+* [ ] Synthetic-data limitation documented.
+* [ ] Leakage-safe preprocessing used.
+* [ ] Logistic Regression baseline completed.
+* [ ] Stratified 5-fold CV completed.
+* [ ] ROC-AUC benchmark recorded.
 
-* [ ] `synthetic_cardiac_100k.csv` is the documented project dataset.
-* [ ] Dataset contains approximately 100,000 records.
-* [ ] `patient_id` is excluded from modelling.
-* [ ] Target definition is documented.
-* [ ] Missing values are audited.
-* [ ] Duplicate rows are audited.
-* [ ] Invalid values are audited.
-* [ ] Invalid categories are checked.
-* [ ] Target balance is documented.
-* [ ] Data dictionary exists.
+## Deep-Learning Foundations
 
-## EDA
+* [ ] Activation functions understood.
+* [ ] Activation functions plotted.
+* [ ] Sigmoid output justified.
+* [ ] Binary cross-entropy justified.
+* [ ] Forward pass implemented in NumPy.
+* [ ] Training loop documented.
+* [ ] Backpropagation understood conceptually.
+* [ ] Learning-rate behaviour demonstrated.
 
-* [ ] Descriptive statistics are included.
-* [ ] Numeric distributions are visualized.
-* [ ] Categorical distributions are examined.
-* [ ] Class balance is visualized.
-* [ ] Relevant feature/target relationships are examined.
-* [ ] Correlation analysis is included.
-* [ ] At least three findings are documented.
-* [ ] Synthetic-data limitations are stated.
+## TensorFlow/Keras
 
-## Leakage Prevention
+* [ ] Sequential network built.
+* [ ] ReLU hidden layers used.
+* [ ] Sigmoid output used.
+* [ ] Binary cross-entropy used.
+* [ ] Adam optimizer used.
+* [ ] Training and validation curves plotted.
+* [ ] Fit diagnosed.
+* [ ] Dropout and/or BatchNormalization tested.
+* [ ] EarlyStopping implemented.
+* [ ] Controlled tuning completed.
 
-* [ ] Exact duplicates are removed before splitting.
-* [ ] Development/test split uses stratification.
-* [ ] `random_state=42` is recorded.
-* [ ] Learned preprocessing is fitted only through pipelines.
-* [ ] Final test data has not been used for feature selection.
-* [ ] Final test data has not been used for hyperparameter selection.
-* [ ] Final test performance has not been used to choose a model.
+## Evaluation
 
-## Baseline
-
-* [ ] Logistic Regression is implemented.
-* [ ] Numeric missing values are handled inside preprocessing.
-* [ ] Numeric scaling is included.
-* [ ] Categorical missing values are handled.
-* [ ] Categorical variables are encoded safely.
-* [ ] 5-fold stratified CV is used.
-* [ ] ROC-AUC is the primary metric.
-* [ ] Accuracy is recorded.
-* [ ] Precision is recorded.
-* [ ] Recall is recorded.
-* [ ] F1 is recorded.
-* [ ] Mean and standard deviation are recorded.
-* [ ] Official baseline benchmark is written in Markdown.
-
-## Deep Learning
-
-* [ ] A Keras Sequential model is built.
-* [ ] Hidden-layer activation is understood and documented.
-* [ ] Sigmoid output is used for binary classification.
-* [ ] Binary cross-entropy loss is used.
-* [ ] Adam or another justified optimizer is used.
-* [ ] Training and validation performance are plotted.
-* [ ] Early stopping is used.
-* [ ] The result is compared with the baseline.
+* [ ] Neural network compared against baseline.
+* [ ] Validation methodology documented.
+* [ ] Final test set not used for model selection.
+* [ ] Final evaluation recorded when appropriate.
 
 ## Engineering
 
-* [ ] Work exists on `feature/sprint-1-baseline`.
-* [ ] Draft PR is opened.
-* [ ] Mentor review occurs on Day 3.
-* [ ] Review comments are addressed.
-* [ ] Notebooks run top-to-bottom.
-* [ ] Dependencies are recorded.
-* [ ] README is updated.
-* [ ] Sprint Review is completed.
-* [ ] Sprint Retrospective is completed.
-* [ ] PR is approved before merge.
+* [ ] Work committed regularly.
+* [ ] Draft PR maintained.
+* [ ] Mentor review completed.
+* [ ] Review comments addressed.
+* [ ] Every notebook runs top-to-bottom.
+* [ ] README updated.
+* [ ] Sprint Review completed.
+* [ ] Sprint Retrospective completed.
+* [ ] PR approved before merge.
 
 ---
 
-# 17. Sprint 1 Final Deliverables
+# 17. Current Status — End of Day 2
 
-At the end of Week 6, the repository must visibly contain:
+Based on work completed so far:
 
 ```text
-✅ 100k synthetic cardiac dataset
-✅ Data dictionary
-✅ Dataset validation audit
-✅ Complete EDA notebook
-✅ Three or more EDA findings
-✅ Leakage-safe development/test split
-✅ Reproducible preprocessing pipeline
-✅ Logistic Regression baseline
-✅ 5-fold cross-validation results
-✅ Official ROC-AUC benchmark
-✅ Baseline metrics CSV
-✅ First Keras neural network
-✅ Neural-network training curves
-✅ Baseline vs neural-network discussion
-✅ Draft PR
-✅ Mentor review evidence
-✅ Sprint Review
-✅ Sprint Retrospective
+DAY 1
+✅ Sprint planning
+✅ Dataset work
+✅ Baseline established
+✅ Draft PR opened
+
+DAY 2
+✅ ReLU / sigmoid / tanh implemented
+✅ Activation functions plotted
+✅ Sigmoid selected for cardiac-risk output
+✅ Binary cross-entropy selected and justified
+✅ Tiny NumPy forward pass implemented
+✅ Forward-pass result documented
+⬜ Restart notebook and Run All
+⬜ Commit
+⬜ Push
+
+DAY 3
+Next → Backpropagation, gradient descent, optimizers, learning-rate experiment, mentor review
+
+DAY 4
+Next → TensorFlow/Keras network
+
+DAY 5
+Next → Tuning, EarlyStopping, evaluation, Sprint Review and Retrospective
 ```
 
 ---
 
-# 18. What Sprint 1 Does Not Do
+# Sprint 1 Success Statement
 
-Sprint 1 will **not**:
+Sprint 1 is successful when we can state:
 
-* claim medical or clinical validity;
-* use real patient data;
-* tune models against the final test set;
-* deploy the final application;
-* select the final production model;
-* perform extensive hyperparameter optimization;
-* interpret synthetic correlations as medical evidence.
-
-Those tasks belong to later sprints.
-
----
-
-# 19. Sprint 1 Success Statement
-
-Sprint 1 is successful when we can truthfully state:
-
-> We audited and documented the 100,000-record synthetic cardiac dataset, completed reproducible exploratory analysis, established a leakage-safe Logistic Regression baseline using stratified cross-validation, recorded the ROC-AUC benchmark that future models must beat, implemented the first TensorFlow/Keras neural network without using the locked final test set for model selection, completed mentor review, and closed the sprint with documented findings and retrospective actions.
+> We validated and documented the synthetic cardiac-risk dataset, established a reproducible Logistic Regression ROC-AUC baseline, demonstrated activation functions and forward propagation, understood the mechanics of backpropagation and optimization, built and trained our first TensorFlow/Keras neural network, evaluated its training behaviour, compared it fairly with the baseline, completed mentor review, and closed the sprint with reproducible notebooks and documented results.
