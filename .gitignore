@@ -7,3 +7,5 @@ __pycache__/
 .ipynb_checkpoints/
 .pytest_cache/
 .matplotlib/
+
+data/LLCP2024/raw/
