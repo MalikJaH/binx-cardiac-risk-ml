@@ -1,4 +1,4 @@
-cluster,count,elevated_risk_rate,mean_age,mean_resting_bp,mean_cholesterol,mean_bmi,mean_max_heart_rate
-0,517,0.242,43.541,121.828,197.953,26.216,151.543
-1,249,0.727,68.113,131.523,219.689,28.773,131.358
-2,434,0.691,68.659,133.302,218.591,27.54,128.966
+cluster,total_records,lower_count,lower_percent,elevated_count,elevated_percent,mean_age,mean_resting_bp,mean_cholesterol,mean_bmi,mean_max_heart_rate
+-1,20,8,40.0,12,60.0,54.95,130.39,219.97,28.95,146.27
+0,245,70,28.57,175,71.43,67.64,131.37,218.63,28.8,132.01
+1,935,516,55.19,419,44.81,55.2,127.1,207.32,26.78,140.92

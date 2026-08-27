@@ -1,6 +1,6 @@
 # Cardiac Patient Monitoring — Machine Learning Analysis
 
-This individual project implements a complete curriculum-aligned machine-learning workflow on a deterministic synthetic cardiac dataset. It cleans and explores the data, compares two supervised classifiers, evaluates them with stratified cross-validation and a held-out test set, builds reusable Scikit-learn pipelines, and explores patient-like groups with PCA and K-means clustering.
+This individual project implements a complete curriculum-aligned machine-learning workflow on a deterministic synthetic cardiac dataset. It cleans and explores the data, compares two supervised classifiers, evaluates them with stratified cross-validation and a held-out test set, builds reusable Scikit-learn pipelines, and compares K-means, DBSCAN, and hierarchical clustering for exploratory patient-like groups.
 
 > **Educational use only:** the records and target are synthetic. This project does not diagnose disease, recommend treatment, provide emergency guidance, or represent a clinically validated system.
 
@@ -38,7 +38,8 @@ requirements.txt               exact Python dependencies
 - Five-fold stratified cross-validation using accuracy, precision, recall, F1, and ROC-AUC.
 - Held-out confusion matrix, classification report, ROC curve, and plain-language error interpretation.
 - Median/mode imputation, standardization, and one-hot encoding learned inside each pipeline to avoid leakage.
-- Standardized PCA visualization and three-cluster K-means exploratory analysis with a silhouette score.
+- Elbow-method and silhouette-score plots to justify the number of K-means clusters.
+- A simple silhouette-score comparison of K-means, DBSCAN, and hierarchical clustering, followed by a PCA visualization of the selected method.
 
 ## Run from a clean environment
 
@@ -77,18 +78,20 @@ After successful execution, inspect:
 
 - `outputs/model_comparison.csv` for cross-validation and held-out metrics.
 - `outputs/confusion_matrix.png` and `outputs/roc_curve.png` for classification evaluation.
-- `outputs/pca_clusters.png` and `outputs/cluster_summary.csv` for exploratory grouping.
+- `outputs/cluster_comparison.csv` for the three-method comparison.
+- `outputs/kmeans_k_selection.csv` and `outputs/kmeans_k_selection.png` for choosing K-means `k`.
+- `outputs/clustered_data.csv`, `outputs/cluster_summary.csv`, and `outputs/pca_clusters.png` for the winning method's labels, summary, and PCA view.
 - `models/cardiac_risk_pipeline.joblib` for the selected fitted end-to-end preprocessing/model pipeline.
 
 Exact scores are generated rather than hard-coded so they remain traceable to the executed environment. Model selection uses mean cross-validated ROC-AUC; the test set is used once for final reporting, not model selection.
 
-In the verified seed-42 run, Logistic Regression was selected with mean five-fold ROC-AUC **0.828 +/- 0.027**. On the 240-row held-out test set it achieved **0.746 accuracy, 0.742 precision, 0.760 recall, 0.751 F1, and 0.828 ROC-AUC**. The exploratory three-cluster solution had a modest silhouette score of **0.223**, so the groups should be treated as descriptive rather than strongly separated. Exact values are recorded in `outputs/final_test_results.csv` and `outputs/model_comparison.csv`.
+In the verified seed-42 run, Logistic Regression was selected with mean five-fold ROC-AUC **0.828 +/- 0.027**. On the 240-row held-out test set it achieved **0.746 accuracy, 0.742 precision, 0.760 recall, 0.751 F1, and 0.828 ROC-AUC**. In the unsupervised comparison, DBSCAN had the highest silhouette score and was used for the final cluster labels. The clustering scores are still modest, so the groups should be treated as descriptive rather than strongly separated. Exact values are recorded in the CSV files under `outputs/`.
 
 ## Limitations
 
 - The dataset and target mechanism are synthetic and simplified.
 - Associations deliberately built into the generator can make performance look more stable than on real data.
 - Important clinical, temporal, social, medication, and measurement context is absent.
-- K-means assumes geometric groups and PCA discards information when projecting to two dimensions.
+- Each clustering method makes different distance/shape assumptions, and PCA discards information when projecting to two dimensions.
 - No external validation, calibration study, fairness audit, prospective evaluation, or clinical review was performed.
 - The saved model is an educational artifact and must not be used for patient care.

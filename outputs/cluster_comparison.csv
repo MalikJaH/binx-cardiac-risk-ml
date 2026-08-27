@@ -1,0 +1,4 @@
+method,clusters_found,silhouette_score,rows_grouped_percent,noise_points
+DBSCAN,2,0.26000075767630104,98.33333333333333,20
+K-means,3,0.22250293334675386,100.0,0
+Hierarchical,3,0.17170992499313242,100.0,0

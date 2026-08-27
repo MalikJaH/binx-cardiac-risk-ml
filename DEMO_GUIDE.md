@@ -29,8 +29,12 @@ Use this outline for a 5-10 minute individual demonstration. Explain the work in
 
 ## 5. Unsupervised exploration and limitations (about 1-2 minutes)
 
-- Show the PCA/K-means plot and cluster summary. The groups are exploratory descriptions, not diagnoses.
-- State the main limitations: synthetic and simplified data, no external validation, no calibration or fairness study, and PCA/K-means assumptions.
+- Show `cluster_comparison.csv`: the silhouette score is higher when clusters are more clearly separated.
+- First show `kmeans_k_selection.png`. Say: "The elbow curve begins to flatten after 3, and the silhouette score is highest at 3, so I chose k = 3 for K-means."
+- Explain that hierarchical clustering was also set to three groups for an easy comparison, while DBSCAN found groups and noise by density.
+- DBSCAN scores highest on this dataset, so the notebook automatically uses its labels for the PCA plot and cluster summary. Label `-1` means noise, not a patient group.
+- Show `cluster_summary.csv` to compare the Lower and Elevated counts and percentages inside each selected cluster.
+- State the main limitations: synthetic and simplified data, modest cluster separation, no external validation, and no calibration or fairness study.
 
 ## Likely questions
 
